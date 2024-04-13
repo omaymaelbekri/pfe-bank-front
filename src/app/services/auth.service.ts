@@ -2,13 +2,11 @@ import { Injectable } from '@angular/core';
 import {Observable, tap} from 'rxjs';
 import {HttpClient} from "@angular/common/http";
 import {TokenDto} from "../model/auth";
-
-
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
+  public auth : boolean = false;
   private baseUrl = 'http://localhost:2001/api/v1/ramadan/user';
 
   constructor(private http: HttpClient) { }
@@ -16,13 +14,17 @@ export class AuthService {
   login(loginDto: any): Observable<TokenDto> {
     return this.http.post<TokenDto>(`${this.baseUrl}/login`, loginDto).pipe(
       tap((token: TokenDto) => {
+        this.auth =true ;
         localStorage.setItem('accessToken', token.accessToken);
       })
     );
 }
   isAuthenticated(): boolean {
     const accessToken = localStorage.getItem('accessToken');
-    return !!accessToken; // Return true if accessToken is present, otherwise false
+    return !!accessToken;
+  }
+  Authenticated( login : boolean): boolean {
+    return login;
   }
   logout(refreshToken: string): Observable<any> {
     return this.http.post(`${this.baseUrl}/logout`, null, { params: { refreshToken } });

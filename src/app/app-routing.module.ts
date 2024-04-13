@@ -15,7 +15,7 @@ const routes: Routes = [
   { path :"new-customer", component : NewCustomerComponent, canActivate: [AuthGuard]},
   { path :"customer-accounts/:id", component : CustomerAccountsComponent, canActivate: [AuthGuard]},
   { path :"login", component : LoginComponent},
-  { path: '', redirectTo: '/dashBord', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
 
 ];
